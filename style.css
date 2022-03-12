@@ -57,11 +57,6 @@ textarea{
   color: white;
 }
 
-.edit_cont {
-  display: flex;
-  justify-content: flex-start;
-}
-
 .saveBtn {
   border-left: 1px solid black;
   border-top-right-radius: 15px;
