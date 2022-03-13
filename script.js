@@ -15,9 +15,14 @@ var tasks = {
 };
 
 //function to get localstorage object, parse it, then update array content
-var updateTasks = function(saveId) {
+var updateTasks = function(textId) {
   var taskList = JSON.parse(localStorage.getItem("tasks"));
-  taskList[saveId].push(document.getElementById(saveId).textContent);
+  var textInputValue = $("#" + textId).val();
+  console.log(textInputValue);
+  var textInputArray = textInputValue.split("\n");
+  var oldAndNewTasks = taskList[textId].concat(textInputArray);
+  var uniqueTasks = [...new Set(oldAndNewTasks)];
+  taskList[textId] = uniqueTasks;
   localStorage.setItem("tasks", JSON.stringify(taskList));
 };
 
@@ -68,10 +73,23 @@ $(".saveBtn").on("click", function() {
   console.log(taskList);
   //if button id = "b" + textarea id then update localstorage
   //if ($(this).attr("id") === "b" + document.getElementsByName("textarea").id) {
-    //get the save button id and slice off the "b". saveButtonId will then hold the resulting number
-    var saveButtonId = $(this).attr("id").slice(1); //"b15" -> "15"
-    var saveIdInt = parseInt(saveButtonId);
-    updateTasks(saveIdInt);
+    //get the save button id and slice off the "b". textAreaId will then hold the resulting number
+    var textAreaId = $(this).attr("id").slice(1); //"b15" -> "15"
+    var textIdInt = parseInt(textAreaId);
+    updateTasks(textIdInt);
   //}
   
 });
+
+
+var getTasks = function() {
+  //parse local storage
+  var retrievedTasks = JSON.parse(localStorage.getItem("tasks"));
+  //insert values into textareas.
+  for (i = 8; i < 19; i++) {
+    document.getElementById(i).value = retrievedTasks[i].join("\n");
+  }
+}
+
+
+getTasks();
