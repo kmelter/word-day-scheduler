@@ -19,11 +19,11 @@ var updateTasks = function(textId) {
   var taskList = JSON.parse(localStorage.getItem("tasks"));
   var textInputValue = $("#" + textId).val();
   console.log(textInputValue);
-  var textInputArray = textInputValue.split("\n");
-  var oldAndNewTasks = taskList[textId].concat(textInputArray);
-  var uniqueTasks = [...new Set(oldAndNewTasks)];
-  taskList[textId] = uniqueTasks;
-  localStorage.setItem("tasks", JSON.stringify(taskList));
+  var textInputArray = textInputValue.split("\n"); //"this\nis\na\nstring" -> ["this","is","a","string"]
+  var oldAndNewTasks = taskList[textId].concat(textInputArray); //["oldTask1", "oldTask2"] + ["newTask1", "newTask2"] -> ["oldTask1", "oldTask2","newTask1", "newTask2"]
+  var uniqueTasks = [...new Set(oldAndNewTasks)]; //creates a new array of unique values from concat 'o' nated arrays
+  taskList[textId] = uniqueTasks; // update taskList array at the specified hour with the new array of unique values
+  localStorage.setItem("tasks", JSON.stringify(taskList)); // update local storage
 };
 
 var setTasks = function() {
@@ -85,9 +85,11 @@ $(".saveBtn").on("click", function() {
 var getTasks = function() {
   //parse local storage
   var retrievedTasks = JSON.parse(localStorage.getItem("tasks"));
-  //insert values into textareas.
-  for (i = 8; i < 19; i++) {
-    document.getElementById(i).value = retrievedTasks[i].join("\n");
+  if (retrievedTasks) {
+    //insert values into textareas.
+    for (i = 8; i < 19; i++) {
+      document.getElementById(i).value = retrievedTasks[i].join("\n");
+    }
   }
 }
 
