@@ -71,14 +71,9 @@ $(".saveBtn").on("click", function() {
     setTasks();
   }
   console.log(taskList);
-  //if button id = "b" + textarea id then update localstorage
-  //if ($(this).attr("id") === "b" + document.getElementsByName("textarea").id) {
-    //get the save button id and slice off the "b". textAreaId will then hold the resulting number
-    var textAreaId = $(this).attr("id").slice(1); //"b15" -> "15"
-    var textIdInt = parseInt(textAreaId);
-    updateTasks(textIdInt);
-  //}
-  
+  var textAreaId = $(this).attr("id").slice(1); //"b15" -> "15"
+  var textIdInt = parseInt(textAreaId);
+  updateTasks(textIdInt);
 });
 
 
@@ -92,6 +87,5 @@ var getTasks = function() {
     }
   }
 }
-
 
 getTasks();
