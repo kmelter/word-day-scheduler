@@ -15,9 +15,9 @@ var tasks = {
 };
 
 //function to get localstorage object, parse it, then update array content
-var updateTasks = function() {
+var updateTasks = function(saveId) {
   var taskList = JSON.parse(localStorage.getItem("tasks"));
-  taskList["8"].push("test");
+  taskList[saveId].push(document.getElementById(saveId).textContent);
   localStorage.setItem("tasks", JSON.stringify(taskList));
 };
 
@@ -66,11 +66,12 @@ $(".saveBtn").on("click", function() {
     setTasks();
   }
   console.log(taskList);
-  //if button id = "b" + textarea id then update localstorage...
-  if ($(this).attr("id") === "b" + document.getElementsByName("textarea").id) {
+  //if button id = "b" + textarea id then update localstorage
+  //if ($(this).attr("id") === "b" + document.getElementsByName("textarea").id) {
     //get the save button id and slice off the "b". saveButtonId will then hold the resulting number
     var saveButtonId = $(this).attr("id").slice(1); //"b15" -> "15"
-    //saveButtonId.parseInt();
-    updateTasks();
-  }
+    var saveIdInt = parseInt(saveButtonId);
+    updateTasks(saveIdInt);
+  //}
+  
 });
